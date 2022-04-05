@@ -13,21 +13,21 @@ def get_actions():
         for row in data:
             try:
                 row["price"] = float(row["price"])
-                row["percentage"] = float(row["percentage"])
-                if row["price"] > 0 and row["percentage"] > 0:
+                row["profit"] = float(row["profit"])
+                if row["price"] > 0 and row["profit"] > 0:
                     actions.append(row)
             except ValueError:
                 print("corrupted data")
     return actions
 
 
-def calculation_action_profit(actions):
+def calculation_action_profit_amount(actions):
     """Add 'profit' value to every actions.
     Caculate with price * %.
     """
     for action in actions:
-        action["profit"] = float(
-            f'{action["price"] * (action["percentage"] / 100):.2f}'
+        action["profit_amount"] = float(
+            f'{action["price"] * (action["profit"] / 100):.2f}'
         )
     return actions
 
@@ -37,12 +37,12 @@ def show_actions(actions):
     total_amount = actions[-2]
     total_profit = actions[-1]
     print(
-        f"\n- La meilleur combinaison d'actions pour un maximum de {MAX_AMOUNT} euros : "
+        f"\n- La meilleure combinaison d'actions pour un maximum de {MAX_AMOUNT} euros : "
     )
     for action in actions[0]:
         print(
             f"- Nom : {action['name']}, Prix : {action['price']},"
-            f" Pourcentage : {action['percentage']}, Profit : {action['profit']}"
+            f" Pourcentage : {action['profit']}, Montant des gains : {action['profit_amount']}"
         )
     print(
         f"\n- Pour un placement de {round(total_amount, 2)} euros,"
@@ -63,13 +63,13 @@ def actions_choose(actions, max_price):
     """Calculate the best actions, thanks to best 'profit'
     for a maximum amount to 500 euros.
     """
-    action_with_profit = calculation_action_profit(actions)
+    action_with_profit = calculation_action_profit_amount(actions)
     best_actions = []
     best_price = 0
     best_profit = 0
     for action_set in all_combinaisons(action_with_profit):
         set_price = sum(map(price, action_set))
-        set_profit = sum(map(profit, action_set))
+        set_profit = sum(map(profit_amount, action_set))
         if set_profit > best_profit and set_price <= max_price:
             best_price = set_price
             best_profit = set_profit
@@ -82,9 +82,9 @@ def price(action):
     return action["price"]
 
 
-def profit(action):
+def profit_amount(action):
     """get 'action' key"""
-    return action["profit"]
+    return action["profit_amount"]
 
 
 def main():
