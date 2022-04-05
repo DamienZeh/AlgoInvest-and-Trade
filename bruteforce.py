@@ -6,7 +6,7 @@ MAX_AMOUNT = 500
 
 
 def get_actions():
-    """Get actions data, and return it."""
+    """Get actions data, remove corrupt data, and return it."""
     actions = []
     with open("twenty_actions.csv", newline="") as csvfile:
         data = csv.DictReader(csvfile)
@@ -18,7 +18,6 @@ def get_actions():
                     actions.append(row)
             except ValueError:
                 print("corrupted data")
-        print(actions)
     return actions
 
 
