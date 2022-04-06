@@ -8,7 +8,7 @@ MAX_AMOUNT = 500
 def get_actions():
     """Get actions data, remove corrupt data, and return it."""
     actions = []
-    with open("dataset1_Python+P7.csv", newline="") as csvfile:
+    with open("dataset2_Python+P7.csv", newline="") as csvfile:
         data = csv.DictReader(csvfile)
         for row in data:
             try:
@@ -29,7 +29,7 @@ def calculation_action_profit_amount(actions):
         action["profit_amount"] = float(
             f'{action["price"] * (action["profit"] / 100):.2f}'
         )
-    actions = sorted(actions, key=sort_with_profit, reverse=True)
+    actions = sorted(actions, key=profit_amount, reverse=True)
     return actions
 
 
@@ -60,13 +60,12 @@ def best_actions(actions):
     actions_build = []
     actions_sorted = calculation_action_profit_amount(actions)
     for action in actions_sorted:
-        if action["price"] < MAX_AMOUNT - result:
+        if action["price"] < MAX_AMOUNT - result and action["price"] >= 1:
             result += action["price"]
             profit += action["profit_amount"]
             actions_build.append(action)
     print(
-
-        f"\n- La meilleure combinaison d'actions pour un maximum de {MAX_AMOUNT} euros : "        
+        f"\n- La meilleure combinaison d'actions pour un maximum de {MAX_AMOUNT} euros : "
         f"\n- Pour {result} euros placés, en 2 ans vous gagnez :"
         f" {round(profit, 2)} euros de bénéfice."
     )
@@ -83,16 +82,10 @@ def profit_amount(action):
     return action["profit_amount"]
 
 
-def sort_with_profit(value):
-    """Return 'profit' value."""
-    return float(value["profit_amount"])
-
-
 def main():
     """Launch program."""
     actions = get_actions()
     show_actions(best_actions(actions))
-
 
 
 start = time.perf_counter()
