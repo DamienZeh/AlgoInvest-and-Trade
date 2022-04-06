@@ -14,7 +14,7 @@ def get_actions():
             try:
                 row["price"] = float(row["price"])
                 row["profit"] = float(row["profit"])
-                if row["price"] > 0 and row["profit"] > 0:
+                if row["price"] > 0.1 and row["profit"] > 0:
                     actions.append(row)
             except ValueError:
                 print("corrupted data")
@@ -26,8 +26,8 @@ def calculation_action_profit_amount(actions):
     Caculate with price * %.
     """
     for action in actions:
-        action["profit_amount"] = float(
-            f'{action["price"] * (action["profit"] / 100):.2f}'
+        action["profit_amount"] = round(
+            float(action["price"] * (action["profit"] / 100)), 2
         )
     return actions
 
@@ -96,4 +96,4 @@ def main():
 start = time.perf_counter()
 main()
 end = time.perf_counter()
-print(f"- Temps de calcul : {round(end - start, 4)} secondes.")
+print(f"\n- Temps de calcul : {round(end - start, 4)} secondes.")
