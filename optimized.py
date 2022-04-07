@@ -8,7 +8,7 @@ MAX_AMOUNT = 500
 def get_actions():
     """Get actions data, remove corrupt data, and return it."""
     actions = []
-    with open("dataset2_Python+P7.csv", newline="") as csvfile:
+    with open("twenty_actions.csv", newline="") as csvfile:
         data = csv.DictReader(csvfile)
         for row in data:
             try:
@@ -66,7 +66,7 @@ def best_actions(actions):
     actions_with_amount = calculation_action_profit_amount(actions)
     actions_sorted = sort_price_and_profit_amount(actions_with_amount)
     for action in actions_sorted:
-        if action["price"] < MAX_AMOUNT - result:
+        if action["price"] < MAX_AMOUNT - result and action["profit_amount"] >= 1:
             result += action["price"]
             profit += action["profit_amount"]
             actions_build.append(action)
