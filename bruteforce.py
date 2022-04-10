@@ -26,7 +26,7 @@ def calculation_action_profit_amount(actions):
     Caculate with price * %.
     """
     for action in actions:
-        action["profit_amount"] = round(
+        action["profit_amount"] = truncate(
             float(action["price"] * (action["profit"] / 100)), 2
         )
     return actions
@@ -45,8 +45,8 @@ def show_actions(actions):
             f" Pourcentage : {action['profit']}, Montant des gains : {action['profit_amount']}"
         )
     print(
-        f"\n- Pour un placement de {round(total_amount, 2)} euros,"
-        f" vous gagnez au bout de deux ans {round(total_profit, 2)} euros."
+        f"\n- Pour un placement de {truncate(total_amount, 2)} euros,"
+        f" vous gagnez au bout de deux ans {truncate(total_profit, 2)} euros."
     )
 
 
@@ -93,7 +93,13 @@ def main():
     show_actions(actions_choose(actions, MAX_AMOUNT))
 
 
+def truncate(num, n):
+    """ truncate number. """
+    integer = int(num * (10**n))/(10**n)
+    return float(integer)
+
+
 start = time.perf_counter()
 main()
 end = time.perf_counter()
-print(f"\n- Temps de calcul : {round(end - start, 4)} secondes.")
+print(f"\n- Temps de calcul : {truncate(end - start, 4)} secondes.")

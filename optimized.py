@@ -8,7 +8,7 @@ MAX_AMOUNT = 500
 def get_actions():
     """Get actions data, remove corrupt data, and return it."""
     actions = []
-    with open("twenty_actions.csv", newline="") as csvfile:
+    with open("dataset2_Python+P7.csv", newline="") as csvfile:
         data = csv.DictReader(csvfile)
         for row in data:
             try:
@@ -26,7 +26,7 @@ def calculation_action_profit_amount(actions):
     Caculate with price * %.
     """
     for action in actions:
-        action["profit_amount"] = round(action["price"] * (action["profit"] / 100), 2)
+        action["profit_amount"] = truncate(action["price"] * (action["profit"] / 100), 2)
 
     return actions
 
@@ -60,7 +60,7 @@ def best_actions(actions):
     """Calculate the best actions, thanks to best 'profit'
     for a maximum amount to 500 euros.
     """
-    profit = 0
+    profit_amount = 0
     result = 0
     actions_build = []
     actions_with_amount = calculation_action_profit_amount(actions)
@@ -68,13 +68,13 @@ def best_actions(actions):
     for action in actions_sorted:
         if action["price"] < MAX_AMOUNT - result and action["profit_amount"] >= 1:
             result += action["price"]
-            profit += action["profit_amount"]
+            profit_amount += action["profit_amount"]
             actions_build.append(action)
     print(
         f"\n- La meilleure combinaison d'actions"
         f" pour un maximum de {MAX_AMOUNT} euros : "
-        f"\n- Pour {round(result, 2)} euros placés, en 2 ans vous gagnez :"
-        f" {round(profit, 2)} euros de bénéfice."
+        f"\n- Pour {truncate(result, 2)} euros placés, en 2 ans vous gagnez :"
+        f" {truncate(profit_amount, 2)} euros de bénéfice."
     )
     return actions_build
 
@@ -94,8 +94,12 @@ def main():
     actions = get_actions()
     show_actions(best_actions(actions))
 
+def truncate(num, n):
+    """ truncate number. """
+    integer = int(num * (10**n))/(10**n)
+    return float(integer)
 
 start = time.perf_counter()
 main()
 end = time.perf_counter()
-print(f"\n- Temps de calcul : {round(end - start, 4)} secondes.")
+print(f"\n- Temps de calcul : {truncate((end - start), 4)} secondes.")
