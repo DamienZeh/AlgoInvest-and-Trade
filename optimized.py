@@ -8,13 +8,13 @@ MAX_AMOUNT = 500
 def get_actions():
     """Get actions data, remove corrupt data, and return it."""
     actions = []
-    with open("dataset2_Python+P7.csv", newline="") as csvfile:
+    with open("dataset1_Python+P7.csv", newline="") as csvfile:
         data = csv.DictReader(csvfile)
         for row in data:
             try:
                 row["price"] = float(row["price"])
                 row["profit"] = float(row["profit"])
-                if row["price"] > 0.1 and row["profit"] > 0:
+                if row["price"] >= 1 and row["profit"] >= 1:
                     actions.append(row)
             except ValueError:
                 print("corrupted data")
