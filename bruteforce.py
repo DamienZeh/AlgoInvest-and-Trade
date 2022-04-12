@@ -87,16 +87,16 @@ def profit_amount(action):
     return action["profit_amount"]
 
 
-def main():
-    """Launch program."""
-    actions = get_actions()
-    show_actions(actions_choose(actions, MAX_AMOUNT))
-
-
 def truncate(num, n):
     """ truncate number. """
     integer = int(num * (10**n))/(10**n)
     return float(integer)
+
+
+def main():
+    """Launch program."""
+    actions = get_actions()
+    show_actions(actions_choose(actions, MAX_AMOUNT))
 
 
 start = time.perf_counter()
