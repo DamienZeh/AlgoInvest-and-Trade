@@ -47,15 +47,6 @@ def show_actions(actions):
         )
 
 
-def all_combinaisons(actions):
-    """get all possibilities of combinations."""
-    combinations = [[]]
-    for action in actions:
-        newset = [i + [action] for i in combinations]
-        combinations.extend(newset)
-    return combinations
-
-
 def best_actions(actions):
     """Calculate the best actions, thanks to best 'profit'
     for a maximum amount to 500 euros.
