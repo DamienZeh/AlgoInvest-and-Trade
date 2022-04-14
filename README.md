@@ -19,7 +19,7 @@ cela ferait saturer la mémoire, et risquerait de faire planter votre PC.<br>
 <br>
 Le fichier **optimized.py** permet quant à lui de parcourir n'importe lequel de ces csv.<br>
 Il trouvera la même solution que le **bruteforce** pour les 20 actions, <br>
-et de très intéressantes solutions pour les 2 autres csv de 1000 actions.<br
+et de très intéressantes solutions pour les 2 autres csv de 1000 actions.<br>
 
 <br><br>
 ## Auteur
